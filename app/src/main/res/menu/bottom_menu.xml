@@ -4,7 +4,7 @@
     <item
         android:id="@+id/first"
         android:icon="@android:drawable/btn_star"
-        android:title="1" />
+        android:title="Объявления" />
     <item
         android:id="@+id/second"
         android:icon="@android:drawable/btn_star"
