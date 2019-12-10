@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 
-public class FirstFragment extends Fragment
+public class ThirdFragment extends Fragment
 {
     private TextView textView;
     private Button button;
@@ -20,7 +20,7 @@ public class FirstFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.first_fragment, null);
+        View view = inflater.inflate(R.layout.third_fragment, null);
         textView = view.findViewById(R.id.textView);
         button = view.findViewById(R.id.button);
 
