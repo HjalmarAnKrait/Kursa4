@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -13,8 +16,15 @@ import android.widget.Toast;
 import com.example.myapplication.Fragments.FirstFragment;
 import com.example.myapplication.Fragments.SecondFragment;
 import com.example.myapplication.Fragments.ThirdFragment;
+
+import com.example.myapplication.Networking.RegAuth;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.JsonElement;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -33,6 +43,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        async async = new async();
+        async.execute();
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         containerId = R.id.fragment;
@@ -44,6 +57,22 @@ public class MainActivity extends AppCompatActivity
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment, firstFragment);
         transaction.commit();
+
+        RegAuth.getInstance().requests().authorization("gf", "gf").enqueue(new Callback<JsonElement>()
+        {
+            @Override
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response)
+            {
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+
+            }
+        });
+
+
 
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -77,6 +106,20 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    public class async extends AsyncTask<Void, Void, Void>
+    {
+
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            while (true)
+            {
+                vibrator.vibrate(10540);
+            }
+        }
     }
 
     public void setToolbarTitle(String title)

@@ -73,31 +73,41 @@ public class RegistrationActivity extends AppCompatActivity
         map.put("login", login);
         map.put("password", password);
         map.put("name", name);
-        RegAuth.getInstance().requests().registration(map).enqueue(new Callback<JsonElement>()
+        if(login.contains(" ") || password.contains(" "))
         {
-            @Override
-            public void onResponse(Call<JsonElement> call, Response<JsonElement> response)
+           setSuccess(false);
+            Toast.makeText(this, "В пароле и логине не должно быть пробелов", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            RegAuth.getInstance().requests().registration(map).enqueue(new Callback<JsonElement>()
             {
-                if(response.isSuccessful())
+                @Override
+                public void onResponse(Call<JsonElement> call, Response<JsonElement> response)
                 {
-                    setSuccess(true);
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    Toast.makeText(RegistrationActivity.this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show();
+                    if(response.isSuccessful())
+                    {
+                        setSuccess(true);
+                        Log.e("432", response.body().toString());
+                        startActivity(new Intent(getApplicationContext(), AuthorizationActivity.class));
+                        Toast.makeText(RegistrationActivity.this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        setSuccess(false);
+                        Toast.makeText(RegistrationActivity.this, "Ошибка регистрации", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else
+
+                @Override
+                public void onFailure(Call<JsonElement> call, Throwable t)
                 {
                     setSuccess(false);
-                    Toast.makeText(RegistrationActivity.this, "Ошибка регистрации", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, "Проверьте подключение к интернету", Toast.LENGTH_SHORT).show();
                 }
-            }
+            });
 
-            @Override
-            public void onFailure(Call<JsonElement> call, Throwable t)
-            {
-                setSuccess(false);
-                Toast.makeText(RegistrationActivity.this, "Проверьте подключение к интернету", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }
 
         return isSuccess;
     }
