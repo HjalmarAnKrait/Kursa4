@@ -94,7 +94,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        Toast.makeText(this, "Work", Toast.LENGTH_SHORT).show();
-        return super.onOptionsItemSelected(item);
+        transaction = getSupportFragmentManager().beginTransaction();
+        int id = item.getItemId();
+        switch (id)
+        {
+
+        }
+        transaction.addToBackStack(null);
+        transaction.commit();
+        return true;
     }
 }
