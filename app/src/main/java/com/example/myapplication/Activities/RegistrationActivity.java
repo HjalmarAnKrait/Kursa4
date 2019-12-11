@@ -80,6 +80,8 @@ public class RegistrationActivity extends AppCompatActivity
             setSuccess(true);
             startActivity(new Intent(this, AuthorizationActivity.class));
             Toast.makeText(this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show();
+            db.close();
+            query.close();
         }
         else
         {
