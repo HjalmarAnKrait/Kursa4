@@ -83,7 +83,7 @@ public class RegistrationActivity extends AppCompatActivity
         }
         else
         {
-            Toast.makeText(this,"Пользователь с таким именемуже существует", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Пользователь с таким именем уже существует", Toast.LENGTH_SHORT).show();
             setSuccess(false);
         }
         return isSuccess;

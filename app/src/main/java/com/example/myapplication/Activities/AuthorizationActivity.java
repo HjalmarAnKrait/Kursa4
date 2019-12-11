@@ -42,7 +42,8 @@ public class AuthorizationActivity extends AppCompatActivity
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
         this.db = getBaseContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
-        this.db.execSQL("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, login TEXT NOT NULL, password TEXT NOT NULL)");
+        this.db.execSQL("CREATE TABLE IF NOT EXISTS users(id_user INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, login TEXT NOT NULL, password TEXT NOT NULL)");
+        this.db.execSQL("CREATE TABLE IF NOT EXISTS advert(id_advert INTEGER PRIMARY KEY AUTOINCREMENT, id_user INTEGER NOT NULL, category TEXT NOT NULL, title TEXT NOT NULL, description TEXT NOT NULL, imagePath TEXT)");
         db.execSQL("INSERT INTO users (name, login, password) VALUES('test1', 'test1', 'test1')");
 
 

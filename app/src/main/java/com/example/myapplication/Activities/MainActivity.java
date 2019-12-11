@@ -57,19 +57,7 @@ public class MainActivity extends AppCompatActivity
         transaction.add(R.id.fragment, firstFragment);
         transaction.commit();
 
-        RegAuth.getInstance().requests().authorization("gf", "gf").enqueue(new Callback<JsonElement>()
-        {
-            @Override
-            public void onResponse(Call<JsonElement> call, Response<JsonElement> response)
-            {
 
-            }
-
-            @Override
-            public void onFailure(Call<JsonElement> call, Throwable t) {
-
-            }
-        });
 
 
 
@@ -87,9 +75,10 @@ public class MainActivity extends AppCompatActivity
                         transaction.replace(containerId, firstFragment);
                         setToolbarTitle("Просмотр по категориям");
                         break;
+
                     case R.id.second:
                         transaction.replace(containerId,secondFragment);
-                        setToolbarTitle("Поиск по категориям");
+                        setToolbarTitle("Мои объявления");
                         break;
 
                         default:
