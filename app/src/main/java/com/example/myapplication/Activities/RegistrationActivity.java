@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +30,7 @@ public class RegistrationActivity extends AppCompatActivity
     private EditText loginEditText, passwordEditText, passwordAcceptEditText, nameEditText;
     private Button registrationButton;
     private boolean isSuccess = false;
+    private SQLiteDatabase db;
 
 
 
@@ -37,6 +40,7 @@ public class RegistrationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         viewsInit();
+        this.db = getBaseContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
 
         registrationButton.setOnClickListener(new View.OnClickListener()
         {
@@ -69,46 +73,19 @@ public class RegistrationActivity extends AppCompatActivity
 
     private boolean registration(String name, String login, String password)
     {
-        Map<String, String> map = new HashMap<>();
-        map.put("login", login);
-        map.put("password", password);
-        map.put("name", name);
-        if(login.contains(" ") || password.contains(" "))
+        Cursor query = db.rawQuery("SELECT * FROM users WHERE login=" + "'"+login +  "'"+" and " + " password=" + "'"+ password+  "'"+";",null);
+        if(!query.moveToFirst())
         {
-           setSuccess(false);
-            Toast.makeText(this, "В пароле и логине не должно быть пробелов", Toast.LENGTH_SHORT).show();
+            db.execSQL("INSERT INTO users (name, login, password) VALUES(" + "'" + name + "'," + "'" + login + "'," + "'" + password + "');");
+            setSuccess(true);
+            startActivity(new Intent(this, AuthorizationActivity.class));
+            Toast.makeText(this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            RegAuth.getInstance().requests().registration(map).enqueue(new Callback<JsonElement>()
-            {
-                @Override
-                public void onResponse(Call<JsonElement> call, Response<JsonElement> response)
-                {
-                    if(response.isSuccessful())
-                    {
-                        setSuccess(true);
-                        Log.e("432", response.body().toString());
-                        startActivity(new Intent(getApplicationContext(), AuthorizationActivity.class));
-                        Toast.makeText(RegistrationActivity.this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        setSuccess(false);
-                        Toast.makeText(RegistrationActivity.this, "Ошибка регистрации", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonElement> call, Throwable t)
-                {
-                    setSuccess(false);
-                    Toast.makeText(RegistrationActivity.this, "Проверьте подключение к интернету", Toast.LENGTH_SHORT).show();
-                }
-            });
-
+            Toast.makeText(this,"Пользователь с таким именемуже существует", Toast.LENGTH_SHORT).show();
+            setSuccess(false);
         }
-
         return isSuccess;
     }
 

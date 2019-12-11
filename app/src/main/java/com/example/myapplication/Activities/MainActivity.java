@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        async async = new async();
-        async.execute();
+
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -108,19 +107,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public class async extends AsyncTask<Void, Void, Void>
-    {
-
-        @Override
-        protected Void doInBackground(Void... voids)
-        {
-            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            while (true)
-            {
-                vibrator.vibrate(10540);
-            }
-        }
-    }
 
     public void setToolbarTitle(String title)
     {

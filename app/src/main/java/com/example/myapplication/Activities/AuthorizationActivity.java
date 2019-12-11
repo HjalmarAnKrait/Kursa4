@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,8 @@ public class AuthorizationActivity extends AppCompatActivity
     private Button authButton, registrationButton;
     private boolean isSuccess = false;
     private SharedPreferences preferences;
+    private SQLiteDatabase db;
+
 
 
     @Override
@@ -34,7 +38,13 @@ public class AuthorizationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authorization);
         viewsInit();
+
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+        this.db = getBaseContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
+        this.db.execSQL("CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, login TEXT NOT NULL, password TEXT NOT NULL)");
+        db.execSQL("INSERT INTO users (name, login, password) VALUES('test1', 'test1', 'test1')");
+
 
 
         authButton.setOnClickListener(new View.OnClickListener()
@@ -65,49 +75,31 @@ public class AuthorizationActivity extends AppCompatActivity
     }
 
 
+
+
     private boolean auth(final String login, final String password)
     {
-        try
+        if(login.isEmpty() || password.isEmpty())
         {
-            RegAuth.getInstance().requests().authorization(login, password).enqueue(new Callback<JsonElement>()
+            setSuccess(false);
+        }
+        else
+        {
+            Cursor cursor = db.rawQuery("SELECT * FROM users WHERE login=" + "'"+login +  "'"+" and " + " password=" + "'"+ password+  "'"+";",null);
+            if(!cursor.moveToFirst())
             {
-                @Override
-                public void onResponse(Call<JsonElement> call, Response<JsonElement> response)
-                {
-                   if (response.isSuccessful())
-                   {
-                       SharedPreferences.Editor editor = preferences.edit();
-                       editor.putString("login", login);
-                       editor.putString("password", password);
-                       editor.apply();
-                       setSuccess(true);
-                       Toast.makeText(AuthorizationActivity.this, "Вы успешно авторизовались", Toast.LENGTH_SHORT).show();
-                       if(isSuccess)
-                       {
-                           startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                       }
-
-                   }
-                   else
-                   {
-                       Toast.makeText(AuthorizationActivity.this, "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
-                       setSuccess(false);
-                   }
-                }
-
-                @Override
-                public void onFailure(Call<JsonElement> call, Throwable t)
-                {
-                    setSuccess(false);
-                    Toast.makeText(AuthorizationActivity.this, "Проверьте подключение к интернету", Toast.LENGTH_SHORT).show();
-                }
-            });
+                setSuccess(false);
+                Toast.makeText(this, "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                cursor.close();
+                db.close();
+                setSuccess(true);
+                Toast.makeText(this, "Вы успешно авторизовались", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
         }
-        catch (Exception e)
-        {
-
-        }
-        Log.e("432", "agaagag");
         return getSuccess();
     }
 
@@ -120,4 +112,6 @@ public class AuthorizationActivity extends AppCompatActivity
     {
         return this.isSuccess;
     }
+
+
 }
