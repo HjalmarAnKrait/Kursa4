@@ -96,7 +96,7 @@ public class AuthorizationActivity extends AppCompatActivity
             else
             {
                 //Toast.makeText(this, "" + cursor.getInt(0), Toast.LENGTH_SHORT).show();cursor.getInt(1);
-                SharedPreferences preferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
 
                 editor.putInt("userId", cursor.getInt(0));

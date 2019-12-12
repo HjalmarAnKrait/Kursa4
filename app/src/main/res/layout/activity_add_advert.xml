@@ -30,6 +30,14 @@
         android:layout_marginLeft="5dp"
         android:hint="Описание"
         android:layout_marginRight="5dp"/>
+    <EditText
+        android:id="@+id/categoryEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionEditText"
+        android:layout_marginLeft="5dp"
+        android:hint="Категория"
+        android:layout_marginRight="5dp"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +45,7 @@
         android:text="Добавить"
         android:background="@drawable/button_selector"
         android:textAllCaps="false"
-        android:layout_below="@id/descriptionEditText"
+        android:layout_below="@id/categoryEditText"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"/>
 

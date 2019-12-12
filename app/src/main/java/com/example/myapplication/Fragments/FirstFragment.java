@@ -1,5 +1,7 @@
 package com.example.myapplication.Fragments;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,8 @@ import com.example.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class FirstFragment extends Fragment
 {
    private ListView listView;
@@ -32,7 +36,8 @@ public class FirstFragment extends Fragment
 
         listView = view.findViewById(R.id.listView);
         //AdvertAdapter adapter = new AdvertAdapter(this, R.layout.advert_list_item, list);
-
+        SQLiteDatabase db = getContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
+        //Cursor cursor = db.rawQuery(, null)
 
 
         return view;
