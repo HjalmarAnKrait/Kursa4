@@ -31,7 +31,7 @@ public class FirstFragment extends Fragment
         list = new ArrayList();
 
         listView = view.findViewById(R.id.listView);
-        AdvertAdapter adapter = new AdvertAdapter(this, R.layout.advert_list_item, list)
+        //AdvertAdapter adapter = new AdvertAdapter(this, R.layout.advert_list_item, list);
 
 
 

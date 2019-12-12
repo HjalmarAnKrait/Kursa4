@@ -13,23 +13,19 @@ import com.example.myapplication.R;
 
 public class ThirdFragment extends Fragment
 {
-    private TextView textView;
-    private Button button;
-    private int i = 0;
+    private Button addAdvertButton, deleteAdvertButton, changeAdvertButton, exitButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.third_fragment, null);
-        textView = view.findViewById(R.id.textView);
-        button = view.findViewById(R.id.button);
-
-        button.setOnClickListener(new View.OnClickListener()
+        addAdvertButton = view.findViewById(R.id.addAdvertButton);
+        addAdvertButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                textView.setText(String.valueOf(i++));
+
             }
         });
         return view;
