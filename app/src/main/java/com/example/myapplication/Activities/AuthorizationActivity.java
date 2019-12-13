@@ -28,7 +28,6 @@ public class AuthorizationActivity extends AppCompatActivity
     private Button authButton, registrationButton;
     private boolean isSuccess = false;
     private SharedPreferences preferences;
-    private SQLiteDatabase db;
 
 
 
@@ -41,12 +40,13 @@ public class AuthorizationActivity extends AppCompatActivity
 
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
-        this.db = getBaseContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
+        SQLiteDatabase db = getBaseContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS users(id_user INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, login TEXT NOT NULL, password TEXT NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS adverts(id_advert INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " id_user INTEGER NOT NULL, date TEXT NOT NULL ,category TEXT NOT NULL, title TEXT NOT NULL, description TEXT NOT NULL, imagePath TEXT)");
+                " id_user INTEGER NOT NULL, date TEXT NOT NULL ,category TEXT NOT NULL, title TEXT NOT NULL, description TEXT NOT NULL, userName TEXT NOT NULL)");
+        db.close();//+ imagePath Text
 
-        db.execSQL("INSERT INTO users (name, login, password) VALUES('test1', 'test1', 'test1')");
+        //db.execSQL("DELETE FROM users WHERE name ='test1'or login = 'test1' or password = 'test1'");
 
 
         authButton.setOnClickListener(new View.OnClickListener()
@@ -87,11 +87,15 @@ public class AuthorizationActivity extends AppCompatActivity
         }
         else
         {
+            SQLiteDatabase db = getBaseContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
             Cursor cursor = db.rawQuery("SELECT * FROM users WHERE login=" + "'"+login +  "'"+" and " + " password=" + "'"+ password+  "'"+";",null);
             if(!cursor.moveToFirst())
             {
                 setSuccess(false);
                 Toast.makeText(this, "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
+                cursor.close();
+                db.close();
+
             }
             else
             {
@@ -100,6 +104,7 @@ public class AuthorizationActivity extends AppCompatActivity
                 SharedPreferences.Editor editor = preferences.edit();
 
                 editor.putInt("userId", cursor.getInt(0));
+                editor.putString("userName", login);
                 editor.apply();
 
                 cursor.close();

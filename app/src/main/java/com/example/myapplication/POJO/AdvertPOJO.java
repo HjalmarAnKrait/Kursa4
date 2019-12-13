@@ -3,16 +3,16 @@ package com.example.myapplication.POJO;
 public class AdvertPOJO
 {
     private String title;
+    private String userName;
+    private String date;
     private String description;
-    private String imagePath;
-    private int userID;
     private int advertID;
 
-    public AdvertPOJO(String title, String description, String imagePath, int userID, int advertID) {
+    public AdvertPOJO(String title, String userName, String date, String description, int advertID) {
         this.title = title;
+        this.userName = userName;
+        this.date = date;
         this.description = description;
-        this.imagePath = imagePath;
-        this.userID = userID;
         this.advertID = advertID;
     }
 
@@ -24,28 +24,28 @@ public class AdvertPOJO
         this.title = title;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public int getAdvertID() {

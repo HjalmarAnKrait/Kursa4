@@ -9,7 +9,7 @@
     <item
         android:id="@+id/second"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Поиск" />
+        android:title="Мои объявления" />
     <item
         android:id="@+id/third"
         android:icon="@drawable/man_icon"

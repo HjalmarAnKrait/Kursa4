@@ -2,15 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/сolorListItem">
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="150dp"
-        android:layout_margin="20dp"
         android:layout_height="150dp"
-        android:background="@color/colorPrimaryDark"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#0068746D"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
@@ -27,9 +33,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/imageView"
-        android:layout_below="@id/titleTextView"
+        android:layout_below="@id/userTextView"
         android:layout_marginTop="20dp"
-        android:text="TextView" />
+        android:text="Дата: "
+        android:textSize="10dp"/>
+
+    <TextView
+        android:id="@+id/userTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/imageView"
+        android:layout_below="@id/titleTextView"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Автор: " />
 
     <TextView
         android:id="@+id/descriptionTextView"
@@ -38,6 +55,7 @@
         android:layout_below="@id/dateTextView"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/imageView"
+        android:maxLength="50"
         android:text="TextView" />
 
 </RelativeLayout>

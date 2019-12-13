@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity
                 {
                     case R.id.first:
                         transaction.replace(containerId, firstFragment);
-                        setToolbarTitle("Просмотр по категориям");
+                        setToolbarTitle("Все объявления");
                         break;
 
                     case R.id.second:
@@ -118,8 +118,9 @@ public class MainActivity extends AppCompatActivity
         {
 
         }
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
         transaction.commit();
         return true;
+
     }
 }

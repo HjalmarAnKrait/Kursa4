@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.example.myapplication.POJO.AdvertPOJO;
+import com.example.myapplication.R;
 
 import java.util.List;
 
@@ -27,7 +29,15 @@ public class AdvertAdapter extends ArrayAdapter<AdvertPOJO> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        @SuppressLint("ViewHolder") View v = inflater.inflate(ListID, parent, true);
+        View v = inflater.inflate(ListID, parent, false);
+        TextView title = v.findViewById(R.id.titleTextView);
+        TextView userName = v.findViewById(R.id.userTextView);
+        TextView date = v.findViewById(R.id.dateTextView);
+        TextView description = v.findViewById(R.id.descriptionTextView);
+        title.setText(list.get(position).getTitle());
+        userName.append(list.get(position).getUserName());
+        date.append(list.get(position).getDate());
+        description.setText(list.get(position).getDescription());
 
         return v;
     }
