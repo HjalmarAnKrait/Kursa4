@@ -1,6 +1,5 @@
 package com.example.myapplication.Fragments;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,17 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.Adapters.AdvertAdapter;
-import com.example.myapplication.DatabaseHelper;
+import com.example.myapplication.DatabaseWork.DatabaseHelper;
 import com.example.myapplication.POJO.AdvertPOJO;
 import com.example.myapplication.R;
 
@@ -34,9 +29,7 @@ public class SecondFragment extends Fragment
     private ListView listView;
     private List<AdvertPOJO> list;
     private AdvertAdapter adapter;
-    private ImageButton searchButton;
     private Cursor cursor;
-    private EditText searchText;
     private DatabaseHelper databaseHelper;
     private SQLiteDatabase db;
 
@@ -89,8 +82,14 @@ public class SecondFragment extends Fragment
         {
             do {
                 String userName = cursor.getString(6);
-                AdvertPOJO advertPOJO = new AdvertPOJO(cursor.getString(4), userName
-                        , cursor.getString(2), cursor.getString(5), cursor.getInt(0) );
+                AdvertPOJO advertPOJO = new AdvertPOJO(
+                        cursor.getInt(0),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getString(7));
                 list.add(advertPOJO);
                 adapter.notifyDataSetChanged();
 

@@ -50,7 +50,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"/>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/addPhotoButton"
         android:layout_width="324dp"
         android:layout_height="306dp"

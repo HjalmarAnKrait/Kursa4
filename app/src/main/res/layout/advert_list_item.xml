@@ -44,15 +44,25 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/imageView"
         android:layout_below="@id/titleTextView"
-        android:textSize="20dp"
-        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
         android:text="Автор: " />
 
     <TextView
         android:id="@+id/descriptionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="74dp"
+        android:layout_width="220dp"
+        android:layout_height="52dp"
         android:layout_below="@id/dateTextView"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/imageView"
+        android:maxLength="50"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/costTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionTextView"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/imageView"
         android:maxLength="50"

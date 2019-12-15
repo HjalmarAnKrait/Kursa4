@@ -15,16 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.myapplication.DatabaseHelper;
-import com.example.myapplication.Networking.RegAuth;
+import com.example.myapplication.DatabaseWork.DatabaseHelper;
 import com.example.myapplication.R;
-import com.google.gson.JsonElement;
 
 import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AuthorizationActivity extends AppCompatActivity
 {
@@ -42,9 +38,8 @@ public class AuthorizationActivity extends AppCompatActivity
         setContentView(R.layout.activity_authorization);
         viewsInit();
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
-
+        Log.e("432", new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
         databaseHelper = new DatabaseHelper(this);
-
         try
         {
             databaseHelper.updateDataBase();
