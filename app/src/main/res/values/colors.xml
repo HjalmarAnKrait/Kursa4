@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#DCE4DC</color>
-    <color name="colorToggleButton">#42534C</color>
-    <color name="сolorListItem">#9C9C9C</color>
-    <color name="colorPrimaryDark">#68746D</color>
-    <color name="colorAccent">#8B89C7</color>
+    <color name="colorPrimary">#FFE39D</color>
+    <color name="colorToggleButton">#5E5B2D</color>
+    <color name="сolorListItem">#C47D42</color>
+    <color name="colorPrimaryDark">#C49C35</color>
+    <color name="colorAccent">#F05A5A</color>
     <color name="colorText">#000000</color>
 </resources>

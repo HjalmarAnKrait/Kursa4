@@ -30,6 +30,15 @@
         android:layout_marginLeft="5dp"
         android:hint="Описание"
         android:layout_marginRight="5dp"/>
+
+    <EditText
+        android:id="@+id/costEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionEditText"
+        android:layout_marginLeft="5dp"
+        android:hint="Стоимость"
+        android:layout_marginRight="5dp"/>
     <EditText
         android:id="@+id/categoryEditText"
         android:layout_width="match_parent"
@@ -46,14 +55,15 @@
         android:text="Добавить"
         android:background="@drawable/button_selector"
         android:textAllCaps="false"
-        android:layout_below="@id/descriptionEditText"
+        android:layout_below="@id/costEditText"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"/>
 
     <ImageView
         android:id="@+id/addPhotoButton"
-        android:layout_width="324dp"
-        android:layout_height="306dp"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+
         android:layout_below="@id/addAdvertButton"
         android:layout_centerHorizontal="true"
         android:scaleType="fitCenter"

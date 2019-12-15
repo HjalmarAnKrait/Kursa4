@@ -150,7 +150,8 @@ public class FirstFragment extends Fragment
                         cursor.getString(4),
                         cursor.getString(5),
                         cursor.getString(6),
-                        cursor.getString(7));
+                        cursor.getString(7),
+                        cursor.getInt(8));
                 list.add(advertPOJO);
                 adapter.notifyDataSetChanged();
 

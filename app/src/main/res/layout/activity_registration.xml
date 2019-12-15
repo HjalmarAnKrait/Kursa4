@@ -8,10 +8,23 @@
     tools:context=".Activities.RegistrationActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         app:title="Регистрация"/>
+
+    <ImageView
+        android:id="@+id/userPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:minWidth="200dp"
+        android:src="@android:drawable/ic_menu_camera"
+        android:scaleType="fitCenter"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/name_editText"
+        android:onClick="takePhoto" />
 
     <EditText
         android:id="@+id/name_editText"
@@ -80,6 +93,20 @@
         android:background="@drawable/button_selector"
         android:gravity="center"
         android:text="Зарегестрироваться"
+        android:textAllCaps="false"
+        android:textColor="@color/colorText"
+        android:textSize="20dp" />
+
+    <Button
+        android:onClick="onClick"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/registration_button"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_selector"
+        android:gravity="center"
+        android:text="Назад"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
         android:textSize="20dp" />

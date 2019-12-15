@@ -1,10 +1,14 @@
 package com.example.myapplication.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -58,6 +62,15 @@ public class AuthorizationActivity extends AppCompatActivity
         }
 
 
+        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        if (permissionStatus == PackageManager.PERMISSION_GRANTED)
+        {
+
+        } else {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                    0);
+        }
+
         authButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -77,8 +90,7 @@ public class AuthorizationActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                startActivity(new Intent(getApplicationContext(), RegistrationActivity.class));
-                finish();
+                startActivityForResult(new Intent(getApplicationContext(), RegistrationActivity.class),1);
             }
         });
 

@@ -40,9 +40,11 @@ public class AdvertAdapter extends ArrayAdapter<AdvertPOJO> {
         TextView date = v.findViewById(R.id.dateTextView);
         TextView description = v.findViewById(R.id.descriptionTextView);
         ImageView advertImage = v.findViewById(R.id.imageView);
+        TextView cost = v.findViewById(R.id.costTextView);
         title.setText(list.get(position).getTitle());
         userName.append(list.get(position).getUserName());
         date.append(list.get(position).getDate());
+        cost.setText("" + list.get(position).getCost() + " Рублей");
         description.setText(list.get(position).getDescription());
         String path = list.get(position).getImagePath();
         try

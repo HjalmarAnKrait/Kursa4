@@ -32,7 +32,7 @@ import java.util.Date;
 
 public class AddAdvertActivity extends AppCompatActivity
 {
-    private EditText titleEditText, descriptionEditText, categoryEditText;
+    private EditText titleEditText, descriptionEditText, categoryEditText, costEditText;
     private ImageView advertAddPhotoButton;
     private Button addAdvert;
     private DatabaseHelper databaseHelper;
@@ -48,6 +48,7 @@ public class AddAdvertActivity extends AppCompatActivity
         descriptionEditText = findViewById(R.id.descriptionEditText);
         categoryEditText = findViewById(R.id.categoryEditText);
         advertAddPhotoButton = findViewById(R.id.addPhotoButton);
+        costEditText = findViewById(R.id.costEditText);
         advertAddPhotoButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -90,7 +91,7 @@ public class AddAdvertActivity extends AppCompatActivity
         int id_user = getSharedPreferences("settings", Context.MODE_PRIVATE).getInt("userId", 0);//тут возможна ошибка. проверь
         String userName = getSharedPreferences("settings", Context.MODE_PRIVATE).getString("userName", "name");
 
-        if(addAdvert(title, category, date, description, userName, id_user, Uri.parse(imagePath).getPath(), db))
+        if(addAdvert(title, category, date, description, userName, id_user, Uri.parse(imagePath).getPath(), Integer.valueOf(costEditText.getText().toString()), db))
         {
             //startActivity(new Intent(getApplicationContext(), AddAdvertActivity.class));
             Toast.makeText(this, "Объявлениие успешно добавлено", Toast.LENGTH_SHORT).show();
@@ -103,15 +104,15 @@ public class AddAdvertActivity extends AppCompatActivity
         }
     }
 
-    public boolean addAdvert(String title, String category ,String date, String description, String userName, int id_user, String imagePath, SQLiteDatabase database)
+    public boolean addAdvert(String title, String category ,String date, String description, String userName, int id_user, String imagePath, int cost, SQLiteDatabase database)
     {
         if(title.isEmpty() || category.isEmpty() || date.isEmpty() ||  description.isEmpty() || userName.isEmpty() || imagePath.isEmpty())
         {
             Toast.makeText(getApplicationContext(), "Не все поля заполнены", Toast.LENGTH_SHORT).show();
             return false;
         }
-        database.execSQL(String.format("INSERT INTO adverts(id_user, date, category, title, description, user_name, image_path)" +
-                " VALUES (%d, '%s', '%s', '%s', '%s', '%s', '%s');", id_user, date, category, title, description, userName, imagePath));
+        database.execSQL(String.format("INSERT INTO adverts(id_user, date, category, title, description, user_name, image_path, cost)" +
+                " VALUES (%d, '%s', '%s', '%s', '%s', '%s', '%s', %d);", id_user, date, category, title, description, userName, imagePath, cost));
         Cursor cursor = database.rawQuery(String.format("SELECT * FROM adverts "),null);
         if (!cursor.moveToNext())
         {

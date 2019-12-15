@@ -23,10 +23,10 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:textStyle="bold"
         android:layout_toRightOf="@id/imageView"
         android:text="TextView"
-        android:textSize="30dp" />
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/dateTextView"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/imageView"
         android:layout_below="@id/userTextView"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Дата: "
         android:textSize="10dp"/>
 
@@ -45,7 +45,7 @@
         android:layout_toRightOf="@id/imageView"
         android:layout_below="@id/titleTextView"
         android:textSize="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Автор: " />
 
     <TextView
@@ -53,7 +53,7 @@
         android:layout_width="220dp"
         android:layout_height="52dp"
         android:layout_below="@id/dateTextView"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_toRightOf="@id/imageView"
         android:maxLength="50"
         android:text="TextView" />
@@ -64,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/descriptionTextView"
         android:layout_marginTop="10dp"
+        android:textColor="@android:color/black"
         android:layout_toRightOf="@id/imageView"
         android:maxLength="50"
         android:text="TextView" />
