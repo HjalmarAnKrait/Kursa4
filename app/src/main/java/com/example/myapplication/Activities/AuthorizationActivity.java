@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,9 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.Networking.RegAuth;
 import com.example.myapplication.R;
 import com.google.gson.JsonElement;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,8 +32,8 @@ public class AuthorizationActivity extends AppCompatActivity
     private Button authButton, registrationButton;
     private boolean isSuccess = false;
     private SharedPreferences preferences;
-
-
+    private DatabaseHelper databaseHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,16 +41,26 @@ public class AuthorizationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authorization);
         viewsInit();
-
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
-        SQLiteDatabase db = getBaseContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS users(id_user INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, login TEXT NOT NULL, password TEXT NOT NULL)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS adverts(id_advert INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " id_user INTEGER NOT NULL, date TEXT NOT NULL ,category TEXT NOT NULL, title TEXT NOT NULL, description TEXT NOT NULL, userName TEXT NOT NULL)");
-        db.close();//+ imagePath Text
+        databaseHelper = new DatabaseHelper(this);
 
-        //db.execSQL("DELETE FROM users WHERE name ='test1'or login = 'test1' or password = 'test1'");
+        try
+        {
+            databaseHelper.updateDataBase();
+        }
+        catch (IOException e)
+        {
+            throw new Error("UnableToUpdateDatabase");
+        }
+
+        try {
+            db = databaseHelper.getWritableDatabase();
+        }
+        catch (SQLException e)
+        {
+            throw e;
+        }
 
 
         authButton.setOnClickListener(new View.OnClickListener()
@@ -54,14 +68,22 @@ public class AuthorizationActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                auth(loginEditText.getText().toString(), passwordEditText.getText().toString());
+                if(auth(loginEditText.getText().toString(), passwordEditText.getText().toString(), db))
+                {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                }
+
             }
         });
 
-        registrationButton.setOnClickListener(new View.OnClickListener() {
+        registrationButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(getApplicationContext(), RegistrationActivity.class));
+                finish();
             }
         });
 
@@ -79,27 +101,25 @@ public class AuthorizationActivity extends AppCompatActivity
 
 
 
-    private boolean auth(final String login, final String password)
+    public boolean auth(final String login, final String password, SQLiteDatabase database)
     {
         if(login.isEmpty() || password.isEmpty())
         {
+            Toast.makeText(getApplicationContext(), "Не все поля заполнены", Toast.LENGTH_SHORT).show();
             setSuccess(false);
         }
         else
         {
-            SQLiteDatabase db = getBaseContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
-            Cursor cursor = db.rawQuery("SELECT * FROM users WHERE login=" + "'"+login +  "'"+" and " + " password=" + "'"+ password+  "'"+";",null);
+            Cursor cursor = database.rawQuery(String.format("SELECT * FROM users WHERE login = '%s' and password = '%s';", login, password),null);
+            Log.e("432", String.format("SELECT * FROM users WHERE login = '%s' and password = '%s';", login, password));
             if(!cursor.moveToFirst())
             {
                 setSuccess(false);
-                Toast.makeText(this, "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
                 cursor.close();
-                db.close();
-
             }
             else
             {
-                //Toast.makeText(this, "" + cursor.getInt(0), Toast.LENGTH_SHORT).show();cursor.getInt(1);
                 SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
 
@@ -108,12 +128,10 @@ public class AuthorizationActivity extends AppCompatActivity
                 editor.apply();
 
                 cursor.close();
-                db.close();
-
                 setSuccess(true);
 
-                Toast.makeText(this, "Вы успешно авторизовались", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                Toast.makeText(getApplicationContext(), "Вы успешно авторизовались", Toast.LENGTH_SHORT).show();
+
             }
         }
         return getSuccess();

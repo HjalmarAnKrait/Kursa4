@@ -11,16 +11,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.R;
 
 import java.util.Calendar;
 
 public class AddAdvertActivity extends AppCompatActivity
 {
-    EditText titleEditText, descriptionEditText, categoryEditText;
-    Button addAdvert;
+    private EditText titleEditText, descriptionEditText, categoryEditText;
+    private ImageButton advertAddPhotoButton;
+    private Button addAdvert;
+    private DatabaseHelper databaseHelper;
+    private SQLiteDatabase db;
+    private String imagePath;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -30,6 +36,7 @@ public class AddAdvertActivity extends AppCompatActivity
         titleEditText = findViewById(R.id.titleEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
         categoryEditText = findViewById(R.id.categoryEditText);
+        advertAddPhotoButton = findViewById(R.id.addPhotoButton);
 
 
 
@@ -43,51 +50,36 @@ public class AddAdvertActivity extends AppCompatActivity
         String date = ""+calendar.get(Calendar.DAY_OF_MONTH) + "." + calendar.get(Calendar.MONTH) + " " + calendar.get(Calendar.YEAR);
         String category = categoryEditText.getText().toString();
         int id_user = getSharedPreferences("settings", Context.MODE_PRIVATE).getInt("userId", 0);//тут возможна ошибка. проверь
-        String userName = getSharedPreferences("settings", Context.MODE_PRIVATE).getString("userName", "null");
+        String userName = getSharedPreferences("settings", Context.MODE_PRIVATE).getString("userName", "name");
 
-        if(addAdvert(title, category, date, description, userName, id_user))
+        if(addAdvert(title, category, date, description, userName, id_user, imagePath, db))
         {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), AddAdvertActivity.class));
+            finish();
+        }
+        else
+        {
+            Toast.makeText(this, "Ошибка добавления объявления", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public boolean addAdvert(String title, String category ,String date, String description, String userName, int id_user)
+    public boolean addAdvert(String title, String category ,String date, String description, String userName, int id_user, String imagePath, SQLiteDatabase database)
     {
-        try
+        if(title.isEmpty() || category.isEmpty() || date.isEmpty() ||  description.isEmpty() || userName.isEmpty() || imagePath.isEmpty())
         {
-            if(title.isEmpty() || category.isEmpty() || date.isEmpty() ||  description.isEmpty() || userName.isEmpty())
-            {
-                Toast.makeText(this, "Не все поля заполнены", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            String sql = "INSERT INTO adverts(id_user, date, category, title, description, userName)" +
-                    " VALUES(" + id_user +", '"+date + "' ,"+ "'"+category + "' ,"+"'"+title + "' ,"+"'"+description + "'" + ",'" + userName + "'" +")";
-            Log.e("432", sql);
-
-            SQLiteDatabase db = getBaseContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
-            Cursor cursor = db.rawQuery("SELECT * FROM adverts WHERE description = '" + description +"'", null);
-            if(!cursor.moveToFirst())
-            {
-                db.execSQL(sql);
-                db.close();
-                Toast.makeText(this, "Ошибка добавления объявления", Toast.LENGTH_SHORT).show();
-
-                return  false;
-
-            }
-            else
-            {
-                Toast.makeText(this, "Объявление успешно добавлено", Toast.LENGTH_SHORT).show();
-                db.execSQL(sql);
-                db.close();
-                return  true;
-            }
-        }
-        catch (Exception e)
-        {
-            Log.e("432", e.toString());
+            Toast.makeText(getApplicationContext(), "Не все поля заполнены", Toast.LENGTH_SHORT).show();
             return false;
         }
-
+        database.execSQL(String.format("INSERT INTO adverts(id_user, date, category, title, description, user_name, image_path)" +
+                " VALUES (%d, '%s', '%s', '%s', '%s', '%s', '%s'", id_user, date, category, title, description, userName, imagePath));
+        Cursor cursor = database.rawQuery(String.format("SELECT * FROM adverts "),null);
+        if (!cursor.moveToNext())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }

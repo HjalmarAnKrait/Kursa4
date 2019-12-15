@@ -2,6 +2,7 @@ package com.example.myapplication.Fragments;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +19,11 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.Adapters.AdvertAdapter;
+import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.POJO.AdvertPOJO;
 import com.example.myapplication.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,8 @@ public class SecondFragment extends Fragment
     private ImageButton searchButton;
     private Cursor cursor;
     private EditText searchText;
+    private DatabaseHelper databaseHelper;
+    private SQLiteDatabase db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -44,27 +49,40 @@ public class SecondFragment extends Fragment
         adapter = new AdvertAdapter(getContext(), R.layout.advert_list_item, list);
         listView.setAdapter(adapter);
 
-
-
-
         int userId = getActivity().getSharedPreferences("settings", MODE_PRIVATE).getInt("userId", 0);
-        getAllUserAdverts(userId);
+        databaseHelper = new DatabaseHelper(getContext());
+        try
+        {
+            databaseHelper.updateDataBase();
+        }
+        catch (IOException e)
+        {
+            throw new Error("UnableToUpdateDatabase");
+        }
+        try {
+            db = databaseHelper.getWritableDatabase();
+        }
+        catch (SQLException e)
+        {
+            throw e;
+        }
+
+        getAllUserAdverts(userId, db);
+
 
 
 
         return view;
     }
 
-    public boolean getAllUserAdverts(int userId)
+    public boolean getAllUserAdverts(int userId, SQLiteDatabase database)
     {
-        final SQLiteDatabase db = getContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
-        cursor = db.rawQuery("SELECT * FROM adverts WHERE id_user = " + userId, null);
+        cursor = database.rawQuery(String.format("SELECT * FROM adverts WHERE id_user=%d;",userId), null);
 
         if(!cursor.moveToFirst())
         {
             Toast.makeText(getContext(), "У вас нет объявлений", Toast.LENGTH_SHORT).show();
             cursor.close();
-            db.close();
             return false;
         }
         else
@@ -79,7 +97,6 @@ public class SecondFragment extends Fragment
                 Log.e("432", "" + cursor.getInt(0));
             }while (cursor.moveToNext());
             cursor.close();
-            db.close();
             return true;
         }
     }

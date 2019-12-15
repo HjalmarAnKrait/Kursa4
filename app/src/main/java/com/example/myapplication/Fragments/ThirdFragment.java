@@ -27,7 +27,7 @@ public class ThirdFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                startActivity(new Intent(getContext(), AddAdvertActivity.class));
+                startActivityForResult(new Intent(getContext(), AddAdvertActivity.class), 1);
             }
         });
         return view;

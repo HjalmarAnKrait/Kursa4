@@ -3,6 +3,7 @@ package com.example.myapplication.Fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,10 +21,12 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.Adapters.AdvertAdapter;
+import com.example.myapplication.DatabaseHelper;
 import com.example.myapplication.Networking.RegAuth;
 import com.example.myapplication.POJO.AdvertPOJO;
 import com.example.myapplication.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +38,9 @@ public class FirstFragment extends Fragment
    private List<AdvertPOJO> list;
    private AdvertAdapter adapter;
    private ImageButton searchButton;
-   private Cursor cursor;
    private EditText searchText;
+    private DatabaseHelper databaseHelper;
+    private SQLiteDatabase db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -49,28 +53,27 @@ public class FirstFragment extends Fragment
         searchText = view.findViewById(R.id.search_editText);
         adapter = new AdvertAdapter(getContext(), R.layout.advert_list_item, list);
         listView.setAdapter(adapter);
-        final SQLiteDatabase db = getContext().openOrCreateDatabase("db.db", MODE_PRIVATE, null);
 
-        cursor = db.rawQuery("SELECT * FROM adverts", null);
-
-        if(!cursor.moveToFirst())
+        databaseHelper = new DatabaseHelper(getContext());
+        try
         {
-            Log.e("432", "There is no adverts");
+            databaseHelper.updateDataBase();
         }
-           else
-            {//(String title, String userName, String date, String description, int advertID) {
-                do {
-                    String userName = cursor.getString(6);
-                    AdvertPOJO advertPOJO = new AdvertPOJO(cursor.getString(4), userName
-                            , cursor.getString(2), cursor.getString(5), cursor.getInt(0) );
-                    list.add(advertPOJO);
-                    adapter.notifyDataSetChanged();
+        catch (IOException e)
+        {
+            throw new Error("UnableToUpdateDatabase");
+        }
+        try {
+            db = databaseHelper.getWritableDatabase();
+        }
+        catch (SQLException e)
+        {
+            throw e;
+        }
 
-                    Log.e("432", "" + cursor.getInt(0));
-                }while (cursor.moveToNext());
-            }
-        db.close();
-        cursor.close();
+        if(isAvaliableAdverts(db))
+
+
 
         searchButton.setOnClickListener(new View.OnClickListener()
         {
@@ -133,4 +136,32 @@ public class FirstFragment extends Fragment
 
 
     }
+
+    public boolean isAvaliableAdverts(SQLiteDatabase database)
+    {
+        Cursor cursor = database.rawQuery("SELECT * FROM adverts", null);
+        if(!cursor.moveToFirst())
+        {
+            Log.e("432", "There is no adverts");
+            Toast.makeText(getContext(), "Список объявлений пуст", Toast.LENGTH_SHORT).show();
+            cursor.close();
+            return false;
+        }
+        else
+        {
+            do {
+                String userName = cursor.getString(6);
+                AdvertPOJO advertPOJO = new AdvertPOJO(cursor.getString(4), userName
+                        , cursor.getString(2), cursor.getString(5), cursor.getInt(0) );
+                list.add(advertPOJO);
+                adapter.notifyDataSetChanged();
+
+                Log.e("432", "" + cursor.getInt(0));
+            }while (cursor.moveToNext());
+            cursor.close();
+            return true;
+        }
+
+    }
+
 }
