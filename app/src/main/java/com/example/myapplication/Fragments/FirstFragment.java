@@ -1,5 +1,6 @@
 package com.example.myapplication.Fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.Activities.FullAdvertActivity;
 import com.example.myapplication.Adapters.AdvertAdapter;
 import com.example.myapplication.DatabaseWork.DatabaseHelper;
 import com.example.myapplication.POJO.AdvertPOJO;
@@ -45,6 +48,17 @@ public class FirstFragment extends Fragment
         searchText = view.findViewById(R.id.search_editText);
         adapter = new AdvertAdapter(getContext(), R.layout.advert_list_item, list);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent intent = new Intent(getContext(), FullAdvertActivity.class);
+                intent.putExtra("item", list.get(position));
+                startActivityForResult(intent,1);
+            }
+        });
 
         databaseHelper = new DatabaseHelper(getContext());
         try

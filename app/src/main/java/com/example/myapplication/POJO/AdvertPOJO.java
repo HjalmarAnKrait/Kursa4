@@ -1,6 +1,8 @@
 package com.example.myapplication.POJO;
 
-public class AdvertPOJO
+import java.io.Serializable;
+
+public class AdvertPOJO implements Serializable
 {
     private String title;
     private String userName;
