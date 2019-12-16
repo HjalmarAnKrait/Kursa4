@@ -12,6 +12,9 @@ public class AdvertPOJO implements Serializable
     private String category;
     private int cost;
     private int advertID;
+    private int phone_number;
+    private int typeId;
+    private int categoryId;
 
     public AdvertPOJO(int advertID,
                       String date,
@@ -20,7 +23,10 @@ public class AdvertPOJO implements Serializable
                       String description,
                       String userName,
                       String imagePath,
-                      int cost
+                      int cost,
+                      int phone_number,
+                      int typeId,
+                      int categoryId
                       ) {
         this.title = title;
         this.userName = userName;
@@ -30,8 +36,35 @@ public class AdvertPOJO implements Serializable
         this.category = category;
         this.advertID = advertID;
         this.cost = cost;
+        this.phone_number = phone_number;
+        this.typeId = typeId;
+        this.categoryId = categoryId;
     }
 
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public void setPhone_number(int phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public int getPhone_number() {
+        return phone_number;
+    }
 
     public void setCost(int cost) {
         this.cost = cost;

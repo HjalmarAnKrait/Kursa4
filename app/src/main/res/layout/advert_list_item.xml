@@ -14,6 +14,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:scaleType="centerCrop"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         android:background="#0068746D"
@@ -24,29 +25,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:padding="3dp"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/imageView"
         android:text="TextView"
         android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/typeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="71dp"
+        android:layout_marginTop="10dp"
+
+        android:layout_below="@id/descriptionTextView"
+        android:layout_marginRight="8dp"
+        android:padding="3dp"
+        android:text="TextView"
+        android:textColor="@android:color/holo_blue_bright"
+        android:textSize="15dp"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/imageView"
-        android:layout_below="@id/userTextView"
+        android:layout_below="@id/categoryTextView"
         android:layout_marginTop="10dp"
         android:text="Дата: "
+        android:padding="3dp"
+        android:background="@color/colorPrimary"
         android:textSize="10dp"/>
 
     <TextView
-        android:id="@+id/userTextView"
+        android:id="@+id/categoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/imageView"
         android:layout_below="@id/titleTextView"
-        android:textSize="15dp"
+        android:textSize="10dp"
+        android:padding="3dp"
+        android:background="@color/colorPrimary"
         android:layout_marginTop="5dp"
-        android:text="Автор: " />
+        android:text="Категория: " />
 
     <TextView
         android:id="@+id/descriptionTextView"
@@ -55,6 +79,9 @@
         android:layout_below="@id/dateTextView"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@id/imageView"
+        android:layout_marginRight="20dp"
+        android:padding="3dp"
+        android:background="@color/colorPrimary"
         android:maxLength="50"
         android:text="TextView" />
 
@@ -62,11 +89,14 @@
         android:id="@+id/costTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="3dp"
         android:layout_below="@id/descriptionTextView"
         android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
         android:textColor="@android:color/black"
         android:layout_toRightOf="@id/imageView"
         android:maxLength="50"
+        android:layout_marginBottom="20dp"
         android:text="TextView" />
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.example.myapplication.Activities;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,4 +49,10 @@ public class FullAdvertActivity extends AppCompatActivity
             Log.e("432", e.toString());
         }
     }
+
+    public void onClick(View view)
+    {
+
+    }
+
 }

@@ -8,60 +8,98 @@
     android:background="@color/сolorListItem">
 
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:title="Объявление"
+        android:theme="?attr/actionBarTheme"
+        />
+
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="338dp"
+        android:layout_height="236dp"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#0068746D"
         android:maxWidth="300dp"
         android:maxHeight="300dp"
-        android:scaleType="fitCenter"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:background="#0068746D"
+        android:scaleType="centerCrop"
         app:srcCompat="@mipmap/ic_launcher" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_below="@id/imageView"
+        android:background="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:textStyle="bold"
         android:layout_marginTop="30dp"
+        android:padding="3dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/imageView"
         android:text="TextView"
         android:textSize="40dp" />
 
     <TextView
+        android:id="@+id/userTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_below="@id/titleTextView"
+        android:layout_marginLeft="20dp"
+        android:padding="3dp"
+        android:layout_marginTop="5dp"
+        android:text="Автор: "
+        android:textSize="15dp" />
+
+    <TextView
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:background="@color/colorPrimary"
         android:layout_below="@id/userTextView"
+        android:padding="3dp"
         android:layout_marginTop="10dp"
         android:text="Дата: "
         android:textSize="15dp"/>
 
     <TextView
-        android:id="@+id/userTextView"
+        android:id="@+id/categoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="3dp"
         android:layout_marginLeft="20dp"
-        android:layout_below="@id/titleTextView"
-        android:textSize="15dp"
-        android:layout_marginTop="5dp"
-        android:text="Автор: " />
+        android:layout_below="@id/dateTextView"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:text="Категория: "
+        android:textSize="15dp"/>
 
     <TextView
         android:id="@+id/descriptionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dateTextView"
+        android:layout_below="@id/categoryTextView"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:background="@color/colorPrimary"
         android:textSize="15dp"
+        android:padding="3dp"
         android:layout_marginTop="5dp"
-
-        android:text="TextView" />
+        android:text="" />
 
     <TextView
         android:id="@+id/costTextView"
@@ -69,10 +107,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/descriptionTextView"
         android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
         android:textSize="15dp"
         android:textColor="@android:color/black"
+        android:padding="3dp"
         android:layout_marginLeft="20dp"
         android:maxLength="50"
         android:text="TextView" />
+
+    <TextView
+        android:id="@+id/phoneTextView"
+        android:onClick="onClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:layout_below="@id/descriptionTextView"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:textSize="15dp"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="50dp"
+        android:background="@color/colorPrimary"
+        android:maxLength="50"
+        android:text="Телефон: " />
 
 </RelativeLayout>

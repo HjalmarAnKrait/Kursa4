@@ -24,8 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.DatabaseWork.DatabaseHelper;
 import com.example.myapplication.R;
 
-import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -48,7 +46,7 @@ public class AddAdvertActivity extends AppCompatActivity
 
         titleEditText = findViewById(R.id.titleEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
-        categoryEditText = findViewById(R.id.categoryEditText);
+        categoryEditText = findViewById(R.id.categorySpinner);
         advertAddPhotoButton = findViewById(R.id.addPhotoButton);
         costEditText = findViewById(R.id.costEditText);
         advertAddPhotoButton.setOnClickListener(new View.OnClickListener()

@@ -4,11 +4,11 @@
 
     <item
         android:id="@+id/first"
-        android:icon="@android:drawable/ic_dialog_dialer"
+        android:icon="@android:drawable/ic_menu_search"
         android:title="Объявления" />
     <item
         android:id="@+id/second"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@android:drawable/ic_dialog_dialer"
         android:title="Моё" />
     <item
         android:id="@+id/third"

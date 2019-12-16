@@ -1,5 +1,6 @@
 package com.example.myapplication.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -34,8 +35,8 @@ public class FirstFragment extends Fragment
    private AdvertAdapter adapter;
    private ImageButton searchButton;
    private EditText searchText;
-    private DatabaseHelper databaseHelper;
-    private SQLiteDatabase db;
+   private DatabaseHelper databaseHelper;
+   private SQLiteDatabase db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -60,22 +61,7 @@ public class FirstFragment extends Fragment
             }
         });
 
-        databaseHelper = new DatabaseHelper(getContext());
-        try
-        {
-            databaseHelper.updateDataBase();
-        }
-        catch (IOException e)
-        {
-            throw new Error("UnableToUpdateDatabase");
-        }
-        try {
-            db = databaseHelper.getWritableDatabase();
-        }
-        catch (SQLException e)
-        {
-            throw e;
-        }
+        dbInit(getContext());
 
         if(isAvaliableAdverts(db))
 
@@ -165,7 +151,10 @@ public class FirstFragment extends Fragment
                         cursor.getString(5),
                         cursor.getString(6),
                         cursor.getString(7),
-                        cursor.getInt(8));
+                        cursor.getInt(8),
+                        cursor.getInt(9),
+                        cursor.getInt(10),
+                        cursor.getInt(3));
                 list.add(advertPOJO);
                 adapter.notifyDataSetChanged();
 
@@ -175,6 +164,27 @@ public class FirstFragment extends Fragment
             return true;
         }
 
+    }
+
+    public void dbInit(Context context)
+    {
+        this.databaseHelper = new DatabaseHelper(context);
+        try
+        {
+            this.databaseHelper.updateDataBase();
+        }
+        catch (IOException e)
+        {
+            throw new Error("UnableToUpdateDatabase");
+        }
+
+        try {
+            this.db = databaseHelper.getWritableDatabase();
+        }
+        catch (SQLException e)
+        {
+            throw e;
+        }
     }
 
 }

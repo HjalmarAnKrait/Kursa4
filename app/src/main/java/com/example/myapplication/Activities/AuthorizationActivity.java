@@ -40,26 +40,13 @@ public class AuthorizationActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authorization);
+
         viewsInit();
+        dbInit();
+
         preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
         Log.e("432", new SimpleDateFormat("dd.MM.yyyy HH:mm").format(new Date()));
-        databaseHelper = new DatabaseHelper(this);
-        try
-        {
-            databaseHelper.updateDataBase();
-        }
-        catch (IOException e)
-        {
-            throw new Error("UnableToUpdateDatabase");
-        }
 
-        try {
-            db = databaseHelper.getWritableDatabase();
-        }
-        catch (SQLException e)
-        {
-            throw e;
-        }
 
 
         int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
@@ -152,6 +139,27 @@ public class AuthorizationActivity extends AppCompatActivity
     public boolean getSuccess()
     {
         return this.isSuccess;
+    }
+
+    public void dbInit()
+    {
+        this.databaseHelper = new DatabaseHelper(this);
+        try
+        {
+            this.databaseHelper.updateDataBase();
+        }
+        catch (IOException e)
+        {
+            throw new Error("UnableToUpdateDatabase");
+        }
+
+        try {
+            this.db = databaseHelper.getWritableDatabase();
+        }
+        catch (SQLException e)
+        {
+            throw e;
+        }
     }
 
 
