@@ -1,6 +1,9 @@
 package com.example.myapplication.Activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -16,6 +19,8 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,6 +54,10 @@ public class RegistrationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         viewsInit();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Регистрация");
 
         databaseHelper = new DatabaseHelper(this);
         try
@@ -145,11 +154,6 @@ public class RegistrationActivity extends AppCompatActivity
         this.isSuccess = result;
     }
 
-    public void onClick(View view)
-    {
-        setResult(1);
-        finish();
-    }
 
     public void takePhoto(View view)
     {
@@ -180,11 +184,37 @@ public class RegistrationActivity extends AppCompatActivity
             Toast toast = Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
             toast.show();
         }
-        ImageView imageView = findViewById(R.id.userPhoto);
-        Log.e("432", path);
-        Picasso.with(getApplicationContext()).
-                load("file://" + path)
-                .config(Bitmap.Config.ARGB_8888).into(imageView);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.back, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        finish();
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1)
+        {
+            if(data == null)
+            {
+                ImageView imageView = findViewById(R.id.userPhoto);
+                Log.e("432", Uri.parse(getPath()).getPath());
+                imageView.setImageURI(Uri.parse(getPath()));
+            }
+        }
+
     }
 
     public String getPath()

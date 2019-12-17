@@ -1,35 +1,38 @@
-package com.example.myapplication.Fragments;
+package com.example.myapplication.Activities;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-
-import com.example.myapplication.Activities.FullAdvertActivity;
 import com.example.myapplication.Adapters.AdvertAdapter;
 import com.example.myapplication.DatabaseWork.DatabaseHelper;
 import com.example.myapplication.POJO.AdvertPOJO;
 import com.example.myapplication.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.Context.MODE_PRIVATE;
-
-public class SecondFragment extends Fragment
+public class DeleteAdvertActivity extends AppCompatActivity
 {
+
     private ListView listView;
     private List<AdvertPOJO> list;
     private AdvertAdapter adapter;
@@ -38,34 +41,51 @@ public class SecondFragment extends Fragment
     private SQLiteDatabase db;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.second_fragment, null);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_delete_advert);
+        dbInit(getApplicationContext());
         list = new ArrayList();
-        listView = view.findViewById(R.id.listView3);
-        adapter = new AdvertAdapter(getContext(), R.layout.advert_list_item, list);
+        listView = findViewById(R.id.listView3);
+        int userId = getSharedPreferences("settings", MODE_PRIVATE).getInt("userId", 0);
+        adapter = new AdvertAdapter(getApplicationContext(), R.layout.advert_list_item, list);
         listView.setAdapter(adapter);
-        dbInit(getContext());
+        getAllUserAdverts(userId, db);
 
-        int userId = getActivity().getSharedPreferences("settings", MODE_PRIVATE).getInt("userId", 0);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Удаление объявления");
+
+
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Intent intent = new Intent(getContext(), FullAdvertActivity.class);
-                intent.putExtra("item", list.get(position));
-                startActivityForResult(intent,1);
+               final AdvertPOJO advertPOJO = list.get(position);
+                Snackbar.make(view, "Вы уверены, что хотите удалить это объявление?" ,Snackbar.LENGTH_LONG).setAction("Да", new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        db.execSQL(String.format("DELETE FROM adverts WHERE id_advert = %d;", advertPOJO.getAdvertID()));
+                        finish();
+                    }
+                }).setActionTextColor(getColor(R.color.colorAccent)).show();
             }
         });
-        getAllUserAdverts(userId, db);
 
 
 
 
-        return view;
     }
+
+
 
     public boolean getAllUserAdverts(int userId, SQLiteDatabase database)
     {
@@ -73,7 +93,7 @@ public class SecondFragment extends Fragment
 
         if(!cursor.moveToFirst())
         {
-            Toast.makeText(getContext(), "У вас нет объявлений", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "У вас нет объявлений", Toast.LENGTH_SHORT).show();
             cursor.close();
             return false;
         }
@@ -122,5 +142,19 @@ public class SecondFragment extends Fragment
         {
             throw e;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.back, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        finish();
+        return true;
     }
 }

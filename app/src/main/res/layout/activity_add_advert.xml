@@ -1,97 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.AddAdvertActivity">
-    
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
-        app:title="Добавление объявления"/>
+        android:layout_height="match_parent"
+        tools:context=".Activities.AddAdvertActivity">
 
-    <EditText
-        android:id="@+id/titleEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:maxLength="30"
-        android:hint="Заголовок"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:title="Добавление объявления"/>
 
-    <Spinner
-        android:id="@+id/categorySpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleEditText"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        />
-    <Spinner
-        android:id="@+id/typeSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/categorySpinner"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        />
+        <EditText
+            android:id="@+id/titleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:inputType="text"
+            android:maxLength="30"
+            android:hint="Заголовок"/>
 
-    <EditText
-        android:id="@+id/descriptionEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/typeSpinner"
-        android:layout_marginLeft="5dp"
-        android:hint="Описание"
-        android:layout_marginRight="5dp"/>
+        <Spinner
+            android:id="@+id/categorySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleEditText"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
+        <Spinner
+            android:id="@+id/typeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/categorySpinner"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
 
-    <EditText
-        android:id="@+id/costEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/descriptionEditText"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:hint="Стоимость"
-        android:inputType="number" />
+        <EditText
+            android:id="@+id/descriptionEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/typeSpinner"
+            android:layout_marginLeft="5dp"
+            android:hint="Описание"
+            android:inputType="text"
+            android:maxLength="1000"
+            android:layout_marginRight="5dp"/>
 
-    <EditText
-        android:id="@+id/phoneEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/costEditText"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:hint="Номер телефона"
-        android:inputType="number" />
+        <EditText
+            android:id="@+id/costEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/descriptionEditText"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:maxLength="10"
+            android:hint="Стоимость"
+            android:inputType="number" />
 
-    <Button
-        android:id="@+id/addAdvertButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/phoneEditText"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/button_selector"
-        android:onClick="onClick"
-        android:text="Добавить"
-        android:textAllCaps="false" />
+        <EditText
+            android:id="@+id/phoneEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/costEditText"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:maxLength="12"
+            android:hint="Номер телефона"
+            android:inputType="number" />
 
-    <ImageView
-        android:id="@+id/addPhotoButton"
-        android:layout_width="320dp"
-        android:layout_height="320dp"
-        android:layout_below="@id/addAdvertButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorPrimaryDark"
-        android:scaleType="fitXY"
-        app:srcCompat="@android:drawable/ic_menu_camera"
-        android:layout_marginBottom="20dp"/>
+        <Button
+            android:id="@+id/addAdvertButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phoneEditText"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button_selector"
+            android:onClick="onClick"
+            android:text="Добавить"
+            android:textAllCaps="false" />
+
+        <ImageView
+            android:id="@+id/addPhotoButton"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_below="@id/addAdvertButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:scaleType="fitXY"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            android:layout_marginBottom="20dp"/>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+
+
+</ScrollView>

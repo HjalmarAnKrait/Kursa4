@@ -130,6 +130,41 @@ public class AuthorizationActivity extends AppCompatActivity
         }
         return getSuccess();
     }
+    public boolean auth(final String login, final String password)
+    {
+        if(login.isEmpty() || password.isEmpty())
+        {
+            Toast.makeText(getApplicationContext(), "Не все поля заполнены", Toast.LENGTH_SHORT).show();
+            setSuccess(false);
+        }
+        else
+        {
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM users WHERE login = '%s' and password = '%s';", login, password),null);
+            Log.e("432", String.format("SELECT * FROM users WHERE login = '%s' and password = '%s';", login, password));
+            if(!cursor.moveToFirst())
+            {
+                setSuccess(false);
+                Toast.makeText(getApplicationContext(), "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
+                cursor.close();
+            }
+            else
+            {
+                SharedPreferences preferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+
+                editor.putInt("userId", cursor.getInt(0));
+                editor.putString("userName", login);
+                editor.apply();
+
+                cursor.close();
+                setSuccess(true);
+
+                Toast.makeText(getApplicationContext(), "Вы успешно авторизовались", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+        return getSuccess();
+    }
 
     public void setSuccess(boolean result)
     {

@@ -47,7 +47,7 @@
             android:layout_below="@id/imageView"
             android:background="@color/colorPrimary" />
 
-        <TextView
+        <EditText
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,10 @@
             android:textStyle="bold"
             android:layout_marginTop="30dp"
             android:padding="3dp"
+            android:inputType="text"
+            android:singleLine="true"
             android:layout_centerHorizontal="true"
+            android:maxLength="20"
             android:layout_below="@id/imageView"
             android:text="TextView"
             android:textSize="40dp" />
@@ -96,22 +99,24 @@
             android:text="Категория: "
             android:textSize="15dp"/>
 
-        <TextView
+        <EditText
             android:id="@+id/descriptionTextView"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/categoryTextView"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
+            android:inputType="text"
             android:layout_marginRight="20dp"
             android:minHeight="100dp"
             android:maxLength="1000"
+            android:gravity="left"
             android:background="@color/colorPrimary"
             android:padding="3dp"
             android:text=""
             android:textSize="15dp" />
 
-        <TextView
+        <EditText
             android:id="@+id/costTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -122,10 +127,11 @@
             android:textColor="@android:color/black"
             android:padding="3dp"
             android:layout_marginLeft="20dp"
-            android:maxLength="50"
+            android:inputType="number"
+            android:maxLength="10"
             android:text="TextView" />
 
-        <TextView
+        <EditText
             android:id="@+id/phoneTextView"
             android:onClick="onClick"
             android:layout_width="wrap_content"
@@ -136,11 +142,27 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:textSize="15dp"
+            android:inputType="number"
             android:textColor="@android:color/black"
             android:layout_marginLeft="50dp"
             android:background="@color/colorPrimary"
-            android:maxLength="50"
+            android:maxLength="20"
             android:text="Телефон: " />
+
+        <Button
+            android:id="@+id/change_button"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/descriptionTextView"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Принять"
+            android:textAllCaps="false"
+            android:textColor="@color/colorText"
+            android:textSize="30dp" />
 
     </RelativeLayout>
 

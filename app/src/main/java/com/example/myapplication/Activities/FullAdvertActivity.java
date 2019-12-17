@@ -108,7 +108,6 @@ public class FullAdvertActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
         return true;
     }

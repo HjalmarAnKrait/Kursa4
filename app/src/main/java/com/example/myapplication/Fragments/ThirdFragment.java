@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.Activities.AddAdvertActivity;
 import com.example.myapplication.Activities.AuthorizationActivity;
+import com.example.myapplication.Activities.DeleteAdvertActivity;
+import com.example.myapplication.Activities.SelectChangeAdvertActivity;
 import com.example.myapplication.DatabaseWork.DatabaseHelper;
 import com.example.myapplication.R;
 
@@ -37,6 +39,28 @@ public class ThirdFragment extends Fragment
     {
         final View view = inflater.inflate(R.layout.third_fragment, null);
         imageView = view.findViewById(R.id.profile_picture);
+        deleteAdvertButton = view.findViewById(R.id.deleteAdvertButton);
+        changeAdvertButton = view.findViewById(R.id.changeAdvertButton);
+
+        dbInit(getContext());
+
+        changeAdvertButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(getContext(), SelectChangeAdvertActivity.class));
+            }
+        });
+
+        deleteAdvertButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivityForResult(new Intent(getContext(), DeleteAdvertActivity.class), 1);
+            }
+        });
 
         preferences = getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE);
         String path = preferences.getString("path", "null");
@@ -85,5 +109,28 @@ public class ThirdFragment extends Fragment
             }
         });
         return view;
+
+
+    }
+
+    public void dbInit(Context context)
+    {
+        this.databaseHelper = new DatabaseHelper(context);
+        try
+        {
+            this.databaseHelper.updateDataBase();
+        }
+        catch (IOException e)
+        {
+            throw new Error("UnableToUpdateDatabase");
+        }
+
+        try {
+            this.db = databaseHelper.getWritableDatabase();
+        }
+        catch (SQLException e)
+        {
+            throw e;
+        }
     }
 }

@@ -191,7 +191,7 @@ public class AddAdvertActivity extends AppCompatActivity
         }
         database.execSQL(String.format("INSERT INTO adverts(id_user, date, id_category, title, description, user_name, image_path, cost, phone_number, id_type)" +
                 " VALUES (%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, %d);", id_user, date, id_category, title, description, userName, imagePath, cost, phoneNumber, id_type));
-        Cursor cursor = database.rawQuery(String.format("SELECT * FROM adverts "),null);
+        Cursor cursor = database.rawQuery(String.format("SELECT * FROM adverts WHERE id_user = %d;", id_user),null);
         if (!cursor.moveToNext())
         {
             return false;
@@ -340,7 +340,6 @@ public class AddAdvertActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
         return true;
     }

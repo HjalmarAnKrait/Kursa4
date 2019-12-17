@@ -50,6 +50,17 @@
             android:textAllCaps="false" />
 
         <Button
+            android:id="@+id/changeAdvertButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector"
+            android:text="Редактирование объявления"
+            android:textAllCaps="false" />
+
+
+        <Button
             android:id="@+id/exitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

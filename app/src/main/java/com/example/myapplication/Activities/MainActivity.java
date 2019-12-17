@@ -16,8 +16,6 @@ import android.widget.Toast;
 import com.example.myapplication.Fragments.FirstFragment;
 import com.example.myapplication.Fragments.SecondFragment;
 import com.example.myapplication.Fragments.ThirdFragment;
-
-import com.example.myapplication.Networking.RegAuth;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.JsonElement;
