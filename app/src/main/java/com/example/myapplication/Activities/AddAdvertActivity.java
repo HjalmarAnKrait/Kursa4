@@ -330,6 +330,12 @@ public class AddAdvertActivity extends AppCompatActivity
         this.categoryId = categoryId;
     }
 
+    public boolean regFields_isCorrect_CheckIsEmpty((String title, int id_category ,String date,
+                                                    String description, String userName,
+                                                    int id_user, String imagePath,
+                                                    int cost, int phoneNumber,
+                                                    int id_type)
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {

@@ -197,5 +197,15 @@ public class AuthorizationActivity extends AppCompatActivity
         }
     }
 
+    public  boolean checkValid(String login, String password)
+    {
+        if(login.isEmpty() || password.isEmpty())
+        {
+            return false;
+        }
+        return true;
+
+    }
+
 
 }

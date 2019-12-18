@@ -4,6 +4,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.myapplication.Activities.AuthorizationActivity;
+import com.example.myapplication.Activities.RegistrationActivity;
 import com.example.myapplication.DatabaseWork.DatabaseHelper;
 
 import org.junit.Test;
@@ -20,7 +21,7 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest
 {
     private DatabaseHelper databaseHelper;
-    private SQLiteDatabase db;
+
     @Test
     public void addition_isCorrect()
     {
@@ -30,24 +31,20 @@ public class ExampleUnitTest
     @Test
     public void authFields_isCorrect()
     {
-        try
-        {
-            databaseHelper.updateDataBase();
-        }
-        catch (IOException e)
-        {
-            throw new Error("UnableToUpdateDatabase");
-        }
-
-        try {
-            db = databaseHelper.getWritableDatabase();
-        }
-        catch (SQLException e)
-        {
-            throw e;
-        }
-
-        AuthorizationActivity authorizationActivity = new AuthorizationActivity();
-        assertTrue(authorizationActivity.auth("egor", "123", db));
+        assertTrue(new AuthorizationActivity().checkValid("aleks", "as"));
     }
+
+    @Test
+    public void regFields_isCorrect_Passwords_AreEqual()
+    {
+        assertTrue(new RegistrationActivity().registration("l", "t", "as", "saf"));
+    }
+
+    @Test
+    public void regFields_isCorrect_CheckIsEmpty()
+    {
+        assertTrue(new RegistrationActivity().checkIsEmpty("21", "43", "453", "453", "23"));
+    }
+
+
 }

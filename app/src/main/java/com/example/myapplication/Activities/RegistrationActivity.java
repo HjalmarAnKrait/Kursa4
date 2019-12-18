@@ -106,7 +106,7 @@ public class RegistrationActivity extends AppCompatActivity
         registrationButton = findViewById(R.id.registration_button);
     }
 
-    private boolean registration(String name, String login, String password, String path1)
+    public boolean registration(String name, String login, String password, String path1)
     {
         Cursor query = db.rawQuery(String.format("SELECT * FROM users WHERE login='%s'",login),null);
         if(!query.moveToFirst())
@@ -126,7 +126,7 @@ public class RegistrationActivity extends AppCompatActivity
         return isSuccess;
     }
 
-    private boolean checkIsEmpty(String name, String login, String password, String passwordAccept, String path1)
+    public boolean checkIsEmpty(String name, String login, String password, String passwordAccept, String path1)
     {
         if(name.isEmpty() || login.isEmpty() || password.isEmpty() || passwordAccept.isEmpty() || path1.isEmpty())
         {
@@ -137,7 +137,7 @@ public class RegistrationActivity extends AppCompatActivity
             return true;
     }
 
-    private boolean checkPassword(String password, String passwordAccept)
+    public boolean checkPassword(String password, String passwordAccept)
     {
         if(password.equals(passwordAccept))
             return true;
