@@ -129,28 +129,36 @@ public class ChangeAdvertActivity extends AppCompatActivity
                 {
                     Toast.makeText(ChangeAdvertActivity.this, "Не все поля заполнены!", Toast.LENGTH_SHORT).show();
                 }
-
-                if(imagePath.isEmpty())
+                else if(description.length() < 20)
                 {
-                    setImagePath(pojo.getImagePath());
+                    Toast.makeText(getApplicationContext(), "Длинна описания должна быть не менее 20 символов", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
+                    if(imagePath.isEmpty())
+                    {
+                        setImagePath(pojo.getImagePath());
+                    }
+                    else
+                    {
 
-                    @SuppressLint
-                            ("DefaultLocale") String sql = String.format("UPDATE adverts SET" +
-                                    " title = '%s', description = '%s', image_path= '%s', cost= %d, phone_number= %d" +
-                                    " WHERE id_advert = %d;"
-                            ,title.getText().toString(),
-                            description.getText().toString(),
-                            getImagePath(),
-                            Integer.valueOf(cost.getText().toString().replaceAll("Руб.", "").trim()),
-                            Integer.valueOf(phone.getText().toString().replaceAll("Телефон:.", "").trim()),
-                            pojo.getAdvertID());
-                    Log.e("432", sql);
-                    db.execSQL(sql);
-                    finish();
+                        @SuppressLint
+                                ("DefaultLocale") String sql = String.format("UPDATE adverts SET" +
+                                        " title = '%s', description = '%s', image_path= '%s', cost= %d, phone_number= %d" +
+                                        " WHERE id_advert = %d;"
+                                ,title.getText().toString(),
+                                description.getText().toString(),
+                                getImagePath(),
+                                Integer.valueOf(cost.getText().toString().replaceAll("Руб.", "").trim()),
+                                Integer.valueOf(phone.getText().toString().replaceAll("Телефон:.", "").trim()),
+                                pojo.getAdvertID());
+                        Log.e("432", sql);
+                        db.execSQL(sql);
+                        finish();
+                    }
                 }
+
+
 
 
             }

@@ -131,7 +131,7 @@ public class AddAdvertActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 setCategoryId(categoryIdList.get(position));
-                Toast.makeText(AddAdvertActivity.this, "" + categoryIdList.get(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AddAdvertActivity.this, "" + categoryIdList.get(position), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -189,17 +189,26 @@ public class AddAdvertActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "Не все поля заполнены", Toast.LENGTH_SHORT).show();
             return false;
         }
-        database.execSQL(String.format("INSERT INTO adverts(id_user, date, id_category, title, description, user_name, image_path, cost, phone_number, id_type)" +
-                " VALUES (%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, %d);", id_user, date, id_category, title, description, userName, imagePath, cost, phoneNumber, id_type));
-        Cursor cursor = database.rawQuery(String.format("SELECT * FROM adverts WHERE id_user = %d;", id_user),null);
-        if (!cursor.moveToNext())
+        else if(description.length() < 20)
         {
+            Toast.makeText(getApplicationContext(), "Длинна описания должна быть не менее 20 символов", Toast.LENGTH_SHORT).show();
             return false;
         }
         else
         {
-            return true;
+            database.execSQL(String.format("INSERT INTO adverts(id_user, date, id_category, title, description, user_name, image_path, cost, phone_number, id_type)" +
+                    " VALUES (%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, %d);", id_user, date, id_category, title, description, userName, imagePath, cost, phoneNumber, id_type));
+            Cursor cursor = database.rawQuery(String.format("SELECT * FROM adverts WHERE id_user = %d;", id_user),null);
+            if (!cursor.moveToNext())
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
+
     }
 
     @Override
@@ -330,11 +339,6 @@ public class AddAdvertActivity extends AppCompatActivity
         this.categoryId = categoryId;
     }
 
-    public boolean regFields_isCorrect_CheckIsEmpty((String title, int id_category ,String date,
-                                                    String description, String userName,
-                                                    int id_user, String imagePath,
-                                                    int cost, int phoneNumber,
-                                                    int id_type)
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

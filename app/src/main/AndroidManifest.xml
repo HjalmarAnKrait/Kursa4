@@ -16,7 +16,8 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.SelectChangeAdvertActivity"></activity>
+        <activity android:name=".Activities.AboutActivity"></activity>
+        <activity android:name=".Activities.SelectChangeAdvertActivity" />
         <activity android:name=".Activities.ChangeAdvertActivity" />
         <activity android:name=".Activities.DeleteAdvertActivity" />
         <activity android:name=".Activities.AddAdvertActivity" />

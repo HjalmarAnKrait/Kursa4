@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -103,21 +104,28 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-       getMenuInflater().inflate(R.menu.bottom_menu, menu);
+       getMenuInflater().inflate(R.menu.toolbar_menu, menu);
        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        transaction = getSupportFragmentManager().beginTransaction();
+        //transaction = getSupportFragmentManager().beginTransaction();
         int id = item.getItemId();
+
         switch (id)
         {
-
+            case R.id.exit_menu_button:
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                finish();
+                break;
+            case R.id.about_menu_button:
+                    startActivity(new Intent(getApplicationContext(), AuthorizationActivity.class));
+                    break;
         }
         //transaction.addToBackStack(null);
-        transaction.commit();
+        //transaction.commit();
         return true;
 
     }

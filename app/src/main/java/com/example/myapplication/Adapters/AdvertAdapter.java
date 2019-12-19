@@ -81,9 +81,8 @@ public class AdvertAdapter extends ArrayAdapter<AdvertPOJO> {
 
         try
         {
-            //advertImage.setImageURI(Uri.parse(list.get(position).getImagePath())); ГАВНО
             Picasso.with(v.getContext()).
-                    load("file://" + path)
+                    load("file://" + path).error(android.R.drawable.stat_notify_error)
                     .config(Bitmap.Config.ARGB_8888).into(advertImage);
         }
         catch (Exception e)

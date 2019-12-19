@@ -70,7 +70,7 @@ public class ThirdFragment extends Fragment
         }
         catch (Exception e)
         {
-
+            imageView.setImageResource(android.R.drawable.stat_notify_error);
         }
         databaseHelper = new DatabaseHelper(getContext());
         try

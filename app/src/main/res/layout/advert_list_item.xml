@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:padding="3dp"
-        android:background="@color/colorPrimary"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/imageView"
         android:text="TextView"
@@ -39,12 +38,11 @@
         android:layout_alignParentRight="true"
         android:layout_marginLeft="71dp"
         android:layout_marginTop="10dp"
-
         android:layout_below="@id/descriptionTextView"
         android:layout_marginRight="8dp"
         android:padding="3dp"
         android:text="TextView"
-        android:textColor="@android:color/holo_blue_bright"
+        android:textColor="@color/colorText"
         android:textSize="15dp"
         android:textStyle="italic" />
 
@@ -57,7 +55,6 @@
         android:layout_marginTop="10dp"
         android:text="Дата: "
         android:padding="3dp"
-        android:background="@color/colorPrimary"
         android:textSize="10dp"/>
 
     <TextView
@@ -68,7 +65,6 @@
         android:layout_below="@id/titleTextView"
         android:textSize="10dp"
         android:padding="3dp"
-        android:background="@color/colorPrimary"
         android:layout_marginTop="5dp"
         android:text="Категория: " />
 
@@ -81,7 +77,7 @@
         android:layout_toRightOf="@id/imageView"
         android:layout_marginRight="20dp"
         android:padding="3dp"
-        android:background="@color/colorPrimary"
+
         android:maxLength="50"
         android:text="TextView" />
 
@@ -92,7 +88,6 @@
         android:padding="3dp"
         android:layout_below="@id/descriptionTextView"
         android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
         android:textColor="@android:color/black"
         android:layout_toRightOf="@id/imageView"
         android:maxLength="50"
