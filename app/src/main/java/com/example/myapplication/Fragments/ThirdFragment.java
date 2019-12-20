@@ -64,9 +64,13 @@ public class ThirdFragment extends Fragment
 
         preferences = getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE);
         String path = preferences.getString("path", "null");
-        try {
-            Log.e("432", "profile pic uri" + path);
-            imageView.setImageURI(Uri.parse(path));
+        try
+        {
+            Cursor cursor = db.rawQuery("SELECT * FROM users where id_user = " + preferences.getInt("userId", 0) + ";", null);
+            cursor.moveToFirst();
+            String imagePath = cursor.getString(4);
+            Log.e("432", "profile pic uri" + imagePath);
+            imageView.setImageURI(Uri.parse(imagePath));
         }
         catch (Exception e)
         {

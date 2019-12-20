@@ -66,9 +66,12 @@ public class ChangeAdvertActivity extends AppCompatActivity
         final EditText phone = findViewById(R.id.phoneTextView);
         setImagePath(pojo.getImagePath());
 
+
+
         advertImage = findViewById(R.id.imageView);
 
         final EditText cost = findViewById(R.id.costTextView);
+
 
         this.advertPOJO = pojo;
 
@@ -141,6 +144,19 @@ public class ChangeAdvertActivity extends AppCompatActivity
                     }
                     else
                     {
+                        String a = "Телефон:. ";
+                        String b = "Руб. ";
+                        String cos, phon;
+                        cos =cost.getText().toString();
+                        phon = phone.getText().toString();
+                        for(char c: a.toCharArray())
+                        {
+                           phon = phon.replace(String.valueOf(c), "");
+                        }
+                        for(char c: b.toCharArray())
+                        {
+                            cos = cos.replace(String.valueOf(c), "");
+                        }
 
                         @SuppressLint
                                 ("DefaultLocale") String sql = String.format("UPDATE adverts SET" +
@@ -149,8 +165,8 @@ public class ChangeAdvertActivity extends AppCompatActivity
                                 ,title.getText().toString(),
                                 description.getText().toString(),
                                 getImagePath(),
-                                Integer.valueOf(cost.getText().toString().replaceAll("Руб.", "").trim()),
-                                Integer.valueOf(phone.getText().toString().replaceAll("Телефон:.", "").trim()),
+                                Integer.valueOf(cos.replaceAll("Руб.", "").trim()),
+                                Integer.valueOf(phon.replaceAll("Телефон:.", "").trim()),
                                 pojo.getAdvertID());
                         Log.e("432", sql);
                         db.execSQL(sql);
@@ -167,7 +183,7 @@ public class ChangeAdvertActivity extends AppCompatActivity
 
     public void onClick(View view)
     {
-        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + advertPOJO.getPhone_number())));
+        //startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + advertPOJO.getPhone_number())));
     }
 
     @Override
