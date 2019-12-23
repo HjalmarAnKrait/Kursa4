@@ -108,10 +108,12 @@ public class RegistrationActivity extends AppCompatActivity
 
     public boolean registration(String name, String login, String password, String path1)
     {
-        Cursor query = db.rawQuery(String.format("SELECT * FROM users WHERE login='%s'",login),null);
+        String sql = String.format("SELECT * FROM users WHERE login='%s'",login);
+        Cursor query = db.rawQuery(sql,null);
         if(!query.moveToFirst())
         {
-            db.execSQL(String.format("INSERT INTO users (name, login, password, profile_image) VALUES ('%s','%s','%s', '%s')",name, login, password, path1));
+            String sqlInsert = String.format("INSERT INTO users (name, login, password, profile_image) VALUES ('%s','%s','%s', '%s')",name, login, password, path1);
+            db.execSQL(sqlInsert);
             setSuccess(true);
             setResult(1);
             Toast.makeText(this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show();
